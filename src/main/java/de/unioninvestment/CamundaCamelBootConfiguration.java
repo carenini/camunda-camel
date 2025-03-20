@@ -2,6 +2,7 @@ package de.unioninvestment;
 
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.camunda.bpm.camel.component.CamundaBpmComponent;
 import org.camunda.bpm.camel.spring.CamelServiceImpl;
@@ -16,8 +17,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CamundaCamelBootConfiguration {
 
-	@Autowired
-	CamelContext camelContext;
+    @Bean
+    public CamelContext camelContext() {
+        return new DefaultCamelContext();
+    }
+
 
 	@Autowired
 	ProcessEngine processEngine;
@@ -25,7 +29,7 @@ public class CamundaCamelBootConfiguration {
 	@Bean(name = "camel")
 	public CamelServiceImpl camel() {
 		CamelServiceImpl camelServiceImpl = new CamelServiceImpl();
-		camelServiceImpl.setCamelContext(camelContext);
+		camelServiceImpl.setCamelContext(camelContext());
 		camelServiceImpl.setProcessEngine(processEngine);
 		return camelServiceImpl;
 	}
