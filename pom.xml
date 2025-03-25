@@ -1,113 +1,178 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>de.unioninvestment</groupId>
-  <artifactId>camunda-camel-boot</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+	<groupId>de.unioninvestment</groupId>
+  	<artifactId>camunda-camel-boot</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
 
-  <properties>
-    <!-- spring -->
-    <spring.boot.version>3.3.3</spring.boot.version>
-    <camunda.spring.boot.starter.version>7.22.0</camunda.spring.boot.starter.version>
-    <!-- maven -->
-    <maven.compiler.release>17</maven.compiler.release>
-    <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
-  </properties>
+	<properties>
+    	<!-- spring -->
+    	<spring.boot.version>3.3.3</spring.boot.version>
+    	<camunda.spring.boot.starter.version>7.22.0</camunda.spring.boot.starter.version>
+    	<camel.springboot.version>3.22.4</camel.springboot.version>
+    	<!-- maven -->
+    	<maven.compiler.release>17</maven.compiler.release>
+    	<maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+	</properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${spring.boot.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+	<dependencyManagement>
+    	<dependencies>
+      	<!--Spring Boot BOM -->
+      	<dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-dependencies</artifactId>
+        	<version>${spring.boot.version}</version>
+        	<type>pom</type>
+        	<scope>import</scope>
+		</dependency>
+		<!-- Camunda BOM -->
+		<dependency>
+        	<groupId>org.camunda.bpm</groupId>
+        	<artifactId>camunda-bom</artifactId>
+        	<version>${camunda.spring.boot.starter.version}</version>
+        	<type>pom</type>
+        	<scope>import</scope>
+		</dependency>      
+      	<!-- Camel BOM -->
+      	<dependency>
+        	<groupId>org.apache.camel.springboot</groupId>
+        	<artifactId>camel-spring-boot-bom</artifactId>
+        	<version>${camel.springboot.version}</version>
+        	<type>pom</type>
+        	<scope>import</scope>
+      	</dependency>
+    	</dependencies>
+  	</dependencyManagement>
 
-      <dependency>
+  	<dependencies>
+  	 <dependency>
+		    <groupId>javax.xml.bind</groupId>
+		    <artifactId>jaxb-api</artifactId>
+		    <version>2.3.0</version>
+		</dependency>
+  		<!--Camunda dependecies-->
+    	<dependency>
+     	 <groupId>org.camunda.bpm.springboot</groupId>
+      		<artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
+    	</dependency>    
+		<dependency>
+	    	<groupId>org.camunda.bpm.extension.camel</groupId>
+	    	<artifactId>camunda-bpm-camel-spring</artifactId>
+	    	<version>0.8.0</version>
+		</dependency>
+    	<dependency>
+      		<groupId>com.h2database</groupId>
+      		<artifactId>h2</artifactId>
+      		<scope>runtime</scope>
+		</dependency>
+		<dependency>
+      		<groupId>org.camunda.bpm.springboot</groupId>
+      		<artifactId>camunda-bpm-spring-boot-starter-test</artifactId>
+      		<scope>test</scope>
+   		</dependency>
+   		<dependency>
+		  <groupId>org.camunda.bpm.springboot</groupId>
+		  <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
+		</dependency>
+ 		<!--Camel dependecies-->   
+
+		<!--<dependency>
+	    	<groupId>org.apache.camel.springboot</groupId>
+	    	<artifactId>camel-spring-boot-starter</artifactId>	    
+		</dependency>-->
+		    <dependency>
+	        <groupId>org.apache.camel</groupId>
+	        <artifactId>camel-spring-main</artifactId>
+	        <version>3.22.4</version>
+	    </dependency>
+	        <dependency>
+	        <groupId>org.apache.camel</groupId>
+	        <artifactId>camel-spring-xml</artifactId>
+	        <version>3.22.4</version>
+	    </dependency>
+	        <dependency>
+		        <groupId>org.apache.camel</groupId>
+		        <artifactId>camel-core</artifactId>
+        	    	 <version>3.22.4</version>
+
+    </dependency>
+
+		<!--Other dependecies-->
+		<dependency>
         <groupId>org.camunda.bpm</groupId>
-        <artifactId>camunda-bom</artifactId>
-        <version>${camunda.spring.boot.starter.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+        <artifactId>camunda-engine-plugin-connect</artifactId>       
+	    </dependency>
+	    <dependency>
+	        <groupId>org.camunda.connect</groupId>
+	        <artifactId>camunda-connect-http-client</artifactId>	        
+	    </dependency>
+	    <dependency>
+	        <groupId>org.camunda.bpm</groupId>
+	        <artifactId>camunda-engine-plugin-spin</artifactId>	       
+	    </dependency>
+	    <dependency>
+	        <groupId>org.camunda.spin</groupId>
+	        <artifactId>camunda-spin-dataformat-json-jackson</artifactId>	       
+	    </dependency>
+	    <dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+		</dependency>
+     	<dependency>
+     		 <groupId>org.springframework</groupId>
+      		<artifactId>spring-beans</artifactId>     
+      		<scope>compile</scope>
+    	</dependency> 
+		<dependency>
+		    <groupId>jakarta.annotation</groupId>
+		    <artifactId>jakarta.annotation-api</artifactId>   
+		</dependency>
+		<dependency>
+		    <groupId>org.graalvm.js</groupId>
+		    <artifactId>js</artifactId>
+		    <version>24.2.0</version>
+		    <type>pom</type>
+		</dependency>
+		<dependency>
+		    <groupId>org.graalvm.js</groupId>
+		    <artifactId>js-scriptengine</artifactId>
+		    <version>24.2.0</version>
+		</dependency>
+		
 
-  <dependencies>
-    <dependency>
-      <groupId>org.camunda.bpm.springboot</groupId>
-      <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
-    </dependency>
-    
-	<dependency>
-	    <groupId>org.camunda.bpm.extension.camel</groupId>
-	    <artifactId>camunda-bpm-camel-spring</artifactId>
-	    <version>0.8.0</version>
-	</dependency>
 
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
+  	</dependencies>
 
-    <dependency>
-      <groupId>org.camunda.bpm.springboot</groupId>
-      <artifactId>camunda-bpm-spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
+	<build>
+    	<plugins>
+			<plugin>
+        		<groupId>org.springframework.boot</groupId>
+        		<artifactId>spring-boot-maven-plugin</artifactId>
+        		<version>${spring.boot.version}</version>
+        		<configuration>
+          			<layout>ZIP</layout>
+        		</configuration>
+        		<executions>
+	          		<execution>
+	            		<goals>
+	              			<goal>repackage</goal>
+	            		</goals>
+	          		</execution>
+       			</executions>
+      		</plugin>
+  			<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-compiler-plugin</artifactId>
+        		<version>${maven.compiler.plugin.version}</version>
+      		</plugin>
+    	</plugins>
+	</build>
 
-    <dependency>
-      <groupId>org.glassfish.jaxb</groupId>
-      <artifactId>jaxb-runtime</artifactId>
-    </dependency>
-      <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-beans</artifactId>     
-      <scope>compile</scope>
-    </dependency> 
-    
- 	<!--CAMEL-->   
-	<dependency>
-	    <groupId>org.apache.camel.springboot</groupId>
-	    <artifactId>camel-spring-boot-starter</artifactId>
-	    <version>3.22.4</version>
-	</dependency>
-	
-  </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring.boot.version}</version>
-        <configuration>
-          <layout>ZIP</layout>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven.compiler.plugin.version}</version>
-      </plugin>
-    </plugins>
-  </build>
-
-  <repositories>
-    <repository>
-      <id>camunda-bpm-nexus</id>
-      <name>camunda-bpm-nexus</name>
-      <url>https://artifacts.camunda.com/artifactory/public/</url>
+	<repositories>
+    	<repository>
+      	<id>camunda-bpm-nexus</id>
+      	<name>camunda-bpm-nexus</name>
+      	<url>https://artifacts.camunda.com/artifactory/public/</url>
     </repository>
   </repositories>
-
 </project>
