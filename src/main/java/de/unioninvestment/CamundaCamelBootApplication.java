@@ -11,7 +11,7 @@ import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-
+import org.springframework.context.annotation.ImportResource;
 
 ///**
 // * @SpringBootApplication is a convenience annotation that adds all of the following:
@@ -45,7 +45,7 @@ import org.springframework.context.annotation.Bean;
 ////	}
 //}
 
-
+/*
 public class CamundaCamelBootApplication {
 	public static void main(String[] args) throws Exception {
 		Main main = new Main();
@@ -60,5 +60,25 @@ public class CamundaCamelBootApplication {
 		}
 		main.run();
 	}
+}*/
+
+
+/**
+ * @SpringBootApplication is a convenience annotation that adds all of the following:
+ *  - @Configuration: Tags the class as a source of bean definitions for the application context.
+ *  - @EnableAutoConfiguration: Tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings.
+ *  - @ComponentScan: Tells Spring to look for other components, configurations, and services in the src/main package, letting it find the controllers
+ */ 
+@SpringBootApplication
+@ImportResource("classpath:/routes/send-to-camel-config.xml")
+public class CamundaCamelBootApplication {
+
+	public static void main(String[] args) {
+		SpringApplication application = new SpringApplication(CamundaCamelBootApplication.class);
+		application.setBannerMode(Banner.Mode.CONSOLE);
+		application.setLazyInitialization(false);
+		application.run(args);
+	}
+	
 }
 

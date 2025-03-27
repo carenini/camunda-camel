@@ -5,14 +5,21 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
+  <import resource="classpath:/routes/camunda-bpm-engine-config.xml"/>
+  
+  <bean id="log" class="org.camunda.bpm.camel.spring.util.LogServiceImpl"/>
 
-  <import resource="classpath:/routes/common-test-config.xml"/>
 
   <camelContext id="camelContext" xmlns="http://camel.apache.org/schema/spring">
     <route id="startRoute">
-      <from uri="direct:sendToCamelServiceTask"/>
-      <to uri="log:org.camunda.bpm.camel.spring.samples?level=INFO&amp;showAll=true&amp;multiline=true"/>
-      <to uri="mock:endpoint"/>
+        <from uri="direct:2camel"/>
+        <log message="${date:now:dd-MM-yyyy HH:mm:ss z} HELLO WORLD"/>
     </route>
   </camelContext>
+  
+
+  <bean id="camel" class="org.camunda.bpm.camel.spring.CamelServiceImpl">
+    <property name="processEngine" ref="processEngine"/>
+    <property name="camelContext" ref="camelContext"/>
+  </bean>
 </beans>
